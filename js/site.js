@@ -29,6 +29,32 @@ window.Skova = (function(){
     requestAnimationFrame(tick);
   }
 
+  /* rising copper embers on a canvas: cheap, ~30fps, paused when the tab is hidden */
+  function embers(canvas){
+    var ctx = canvas.getContext("2d"); if (!ctx) return;
+    var W = 0, H = 0, parts = [], last = 0, running = true;
+    function size(){ W = canvas.width = Math.round(window.innerWidth / 2); H = canvas.height = Math.round(window.innerHeight / 2); }
+    function spawn(anywhere){ return { x: Math.random() * W, y: anywhere ? Math.random() * H : H + 6, r: 0.6 + Math.random() * 1.8, vy: 0.12 + Math.random() * 0.4, sway: Math.random() * 6.28, a: 0.25 + Math.random() * 0.6, slate: Math.random() < 0.18 }; }
+    size(); var count = window.innerWidth < 700 ? 26 : 56; for (var i = 0; i < count; i++) parts.push(spawn(true));
+    window.addEventListener("resize", size);
+    document.addEventListener("visibilitychange", function(){ running = !document.hidden; if (running) requestAnimationFrame(tick); });
+    function tick(t){
+      if (!running) return;
+      if (t - last > 33) {
+        last = t; ctx.clearRect(0, 0, W, H); ctx.globalCompositeOperation = "lighter";
+        for (var i = 0; i < parts.length; i++) {
+          var p = parts[i]; p.y -= p.vy; p.sway += 0.015; p.x += Math.sin(p.sway) * 0.18;
+          if (p.y < -8) parts[i] = p = spawn(false);
+          var fade = Math.min(1, p.y / (H * 0.25)) * p.a, rgb = p.slate ? "140,170,185" : "232,156,96";
+          ctx.fillStyle = "rgba(" + rgb + "," + (fade * 0.16).toFixed(3) + ")"; ctx.beginPath(); ctx.arc(p.x, p.y, p.r * 4, 0, 6.2832); ctx.fill();
+          ctx.fillStyle = "rgba(" + rgb + "," + fade.toFixed(3) + ")"; ctx.beginPath(); ctx.arc(p.x, p.y, p.r, 0, 6.2832); ctx.fill();
+        }
+      }
+      requestAnimationFrame(tick);
+    }
+    requestAnimationFrame(tick);
+  }
+
   function init(){
     /* year */
     var y = $("year"); if (y) y.textContent = new Date().getFullYear();
@@ -75,6 +101,29 @@ window.Skova = (function(){
       totop.addEventListener("click", function(){ window.scrollTo({ top: 0, behavior: reduce ? "auto" : "smooth" }); });
       var sentinel = document.querySelector("[data-top-sentinel]") || document.querySelector("main > section");
       if (sentinel && "IntersectionObserver" in window) { new IntersectionObserver(function(en){ totop.classList.toggle("show", !en[0].isIntersecting); }).observe(sentinel); }
+    }
+
+    /* ambient backdrop: light orbs, sweep, equipment silhouettes, embers */
+    var bg = document.querySelector(".bg");
+    if (bg && !bg.querySelector(".orb")) {
+      var PLATE = "<circle cx='50' cy='50' r='46'/><circle cx='50' cy='50' r='30'/><circle cx='50' cy='50' r='9'/><path d='M50 4v17M50 79v17M4 50h17M79 50h17'/>";
+      var DUMB = "<rect x='6' y='22' width='16' height='56' rx='4'/><rect x='22' y='30' width='12' height='40' rx='3'/><rect x='178' y='22' width='16' height='56' rx='4'/><rect x='166' y='30' width='12' height='40' rx='3'/><path d='M34 50h132'/>";
+      var KETTLE = "<path d='M28 46c-7-24 2-40 22-40s29 16 22 40'/><circle cx='50' cy='68' r='34'/>";
+      bg.insertAdjacentHTML("beforeend",
+        "<span class='orb o1'></span><span class='orb o2'></span><span class='orb o3'></span><span class='sweep'></span>" +
+        "<div class='bg-gear'>" +
+          "<svg viewBox='0 0 100 100' style='left:-6%;top:18%;width:min(34vw,420px);--d:90s'>" + PLATE + "</svg>" +
+          "<svg class='slate' viewBox='0 0 100 100' style='right:-8%;top:52%;width:min(40vw,520px);--d:120s;animation-direction:reverse'>" + PLATE + "</svg>" +
+          "<svg class='float' viewBox='0 0 200 100' style='right:6%;top:9%;width:min(30vw,360px);--d:16s'>" + DUMB + "</svg>" +
+          "<svg class='float slate' viewBox='0 0 200 100' style='left:8%;top:68%;width:min(26vw,300px);--d:19s'>" + DUMB + "</svg>" +
+          "<svg class='float' viewBox='0 0 100 104' style='left:44%;top:38%;width:min(14vw,170px);--d:13s'>" + KETTLE + "</svg>" +
+          "<svg viewBox='0 0 100 100' style='left:30%;top:88%;width:min(18vw,220px);--d:70s'>" + PLATE + "</svg>" +
+        "</div><canvas class='embers'></canvas>");
+      if (!reduce) {
+        var gearLayer = bg.querySelector(".bg-gear"), ticking = false;
+        window.addEventListener("scroll", function(){ if (ticking) return; ticking = true; requestAnimationFrame(function(){ gearLayer.style.setProperty("--sy", window.scrollY.toFixed(0)); ticking = false; }); }, { passive: true });
+        embers(bg.querySelector(".embers"));
+      }
     }
 
     /* hero equipment parallax */
