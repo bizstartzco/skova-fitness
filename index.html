@@ -184,7 +184,7 @@
 .coach p{color:var(--muted);font-size:.98rem}
 
 /* manifesto */
-.manifesto{background:var(--steel);border-block:1px solid var(--line)}
+.manifesto{background:rgba(21,23,22,.82);border-block:1px solid var(--line)}
 .manifesto-grid{display:grid;grid-template-columns:repeat(12,1fr);gap:clamp(1.5rem,4vw,3rem);align-items:start}
 .manifesto-grid .big{grid-column:1/9;font-family:var(--display);font-weight:800;font-size:clamp(2.4rem,5.4vw,4.6rem);line-height:.98;text-transform:uppercase;text-wrap:balance}
 .manifesto-grid .big em{font-style:normal;color:var(--turf)}
@@ -316,6 +316,7 @@
 </style>
 </head>
 <body>
+<div class="bg" aria-hidden="true" style="--bg:url(img/bg-floor.jpg)"><span class="rail top"></span><span class="rail bottom"></span></div>
 <div class="grain" aria-hidden="true"></div>
 <div class="progress" aria-hidden="true"></div>
 
@@ -615,7 +616,7 @@
   </div>
 </section>
 
-<section class="section" id="timetable" style="background:var(--steel);border-block:1px solid var(--line)">
+<section class="section band-steel" id="timetable">
   <div class="wrap">
     <div class="section-head row">
       <div>
@@ -704,7 +705,7 @@
   </div>
 </section>
 
-<section class="section" id="calc" style="background:var(--steel);border-block:1px solid var(--line)">
+<section class="section band-steel" id="calc">
   <div class="wrap">
     <div class="section-head">
       <span class="eyebrow">Tools</span>
