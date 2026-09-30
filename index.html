@@ -29,7 +29,7 @@
 .hero h1 .line{display:block;animation:rise 1s var(--ease) both}
 .hero h1 .mask:nth-child(2) .line{animation-delay:.1s}
 .hero h1 .mask:nth-child(3) .line{animation-delay:.2s}
-.hero h1 .accent{color:var(--turf)}
+.hero h1 .accent{color:var(--turf);animation:rise 1s var(--ease) both,shimmer 7s linear infinite}
 @keyframes rise{from{transform:translateY(105%)}to{transform:none}}
 .hero-actions{display:flex;flex-wrap:wrap;gap:.8rem;align-items:center}
 .offer{display:flex;flex-wrap:wrap;align-items:center;gap:.8rem 1.2rem;padding:.8rem 1rem .8rem 1.2rem;border-radius:999px;background:rgba(242,207,99,.08);border:1px solid rgba(242,207,99,.3);width:fit-content;max-width:100%}
@@ -332,7 +332,7 @@
   .built-copy .h2{font-size:clamp(2.6rem,12vw,4rem)}
 }
 @media (prefers-reduced-motion:reduce){
-  .hero h1 .line,.scroll-cue i,.c5 .big-bolt,.plan .plate-spin,.band img{animation:none}
+  .hero h1 .line,.hero h1 .accent,.scroll-cue i,.c5 .big-bolt,.plan .plate-spin,.band img{animation:none}
 }
 </style>
 </head>
@@ -387,6 +387,7 @@
 <main id="top">
 
 <section class="hero" data-top-sentinel>
+  <div class="hero-bg" aria-hidden="true"><img src="img/hero-floor.jpg" alt=""></div>
   <div class="hero-glow" aria-hidden="true"></div>
   <div class="gear-field" aria-hidden="true">
     <div class="gear" style="left:4%;top:12%;--s:150px;--p:1.4;--d:8s;--r:10deg"><svg><use href="#i-dumbbell"/></svg></div>
@@ -438,7 +439,7 @@
   </div>
 </div>
 
-<section class="section" id="zones">
+<section class="section" id="zones" data-watermark="Lift · Strike · Hang · Run · Lift · Strike · Hang · Run · ">
   <div class="wrap">
     <div class="section-head">
       <span class="eyebrow">Four zones, one membership</span>
@@ -507,7 +508,7 @@
 
 <svg class="bar-divider" viewBox="0 0 720 80" aria-hidden="true"><line class="bar" x1="40" y1="40" x2="680" y2="40"/><line class="sleeve" x1="40" y1="40" x2="150" y2="40"/><line class="sleeve" x1="570" y1="40" x2="680" y2="40"/><rect class="plate p1 g" x="86" y="10" width="14" height="60" rx="3"/><rect class="plate p2" x="104" y="16" width="12" height="48" rx="3"/><rect class="plate p3" x="120" y="22" width="10" height="36" rx="3"/><rect class="plate p4 g" x="620" y="10" width="14" height="60" rx="3"/><rect class="plate p5" x="604" y="16" width="12" height="48" rx="3"/><rect class="plate p6" x="590" y="22" width="10" height="36" rx="3"/></svg>
 
-<section class="section" id="built">
+<section class="section" id="built" data-watermark="Built here · Built here · Built here · Built here · ">
   <div class="wrap">
     <div class="built-grid">
       <figure class="portrait" data-tilt>
@@ -576,7 +577,7 @@
   <div class="lb-foot"><span id="lb-cap"></span><button type="button" id="lb-close">Close</button></div>
 </dialog>
 
-<section class="section" id="programs">
+<section class="section" id="programs" data-watermark="Your way · Your way · Your way · Your way · Your way · Your way · ">
   <div class="wrap">
     <div class="section-head">
       <span class="eyebrow">Ways to train</span>
@@ -682,7 +683,7 @@
   </div>
 </section>
 
-<section class="section" id="membership">
+<section class="section" id="membership" data-watermark="Commit · Commit · Commit · Commit · Commit · Commit · ">
   <div class="wrap">
     <div class="section-head row">
       <div>
@@ -782,7 +783,7 @@
   </div>
 </section>
 
-<section class="section" id="faq">
+<section class="section" id="faq" data-watermark="Ask · Ask · Ask · Ask · Ask · Ask · Ask · Ask · Ask · Ask · ">
   <div class="wrap">
     <div class="section-head">
       <span class="eyebrow">Questions</span>
@@ -800,7 +801,7 @@
   </div>
 </section>
 
-<section class="section" id="visit">
+<section class="section" id="visit" data-watermark="No pain no gain · No pain no gain · No pain no gain · No pain no gain · ">
   <div class="wrap">
     <div class="visit-grid">
       <div class="visit-info">
