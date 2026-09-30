@@ -11,7 +11,18 @@ var SITE = {
   phone: "",       // shown as typed, e.g. "+977 98XXXXXXXX"
   whatsapp: "",    // digits only, country code first, e.g. "97798XXXXXXXX"
   timezone: "Asia/Kathmandu",
-  offer: "",       // one line, e.g. "Joining fee waived this month" (leave empty for none)
+  offer: "15% off and free admission until January 10",   // hero strip, one line (leave empty for none)
+  // Load-time pop-up. Shown once per browser session, and never after `ends` (YYYY-MM-DD, gym's timezone). Set promo: null to turn it off.
+  promo: {
+    eyebrow: "Opening offer",
+    headline: "15% off",
+    sub: "+ free admission",
+    text: "Join before January 10 and get 15% off your membership with no admission fee.",
+    ends: "2027-01-10",
+    endsLabel: "January 10",
+    cta: "Claim the offer",
+    note: "Offer ends January 10. Ask at the desk for details."
+  },
   // Opening hours, one entry per day, 24h "HH:MM". null = closed. Keys: sun mon tue wed thu fri sat
   hours: {},       // e.g. { sun:["05:00","21:00"], ..., sat:["06:00","12:00"] }
   // Prices per plan in NPR. Leave empty to show "ask at the desk".
