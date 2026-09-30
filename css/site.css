@@ -42,19 +42,59 @@ p{margin:0}
   background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='160' height='160' filter='url(%23n)'/%3E%3C/svg%3E");
   background-size:160px 160px}
 
-/* gym backdrop: blurred floor photo, steel plate texture, light spill from the turf and the sign */
+/* gym backdrop: floor photo, drifting copper/slate light, steel plate texture, embers and equipment silhouettes (injected by site.js) */
 .bg{position:fixed;inset:0;z-index:-1;overflow:hidden;background:var(--ink);pointer-events:none}
-.bg::before{content:"";position:absolute;inset:-4%;background:var(--bg) center 30%/cover no-repeat;opacity:.72}
-.bg::after{content:"";position:absolute;inset:0;
+.bg::before{content:"";position:absolute;inset:-4%;background:var(--bg) center 30%/cover no-repeat;opacity:.9;animation:bgzoom 40s ease-in-out infinite alternate}
+.bg::after{content:"";position:absolute;inset:0;z-index:1;
   background:
-    radial-gradient(60% 45% at 8% 12%,rgba(207,132,80,.22),transparent 70%),
-    radial-gradient(45% 40% at 92% 88%,rgba(109,138,151,.16),transparent 70%),
-    radial-gradient(70% 60% at 50% 110%,rgba(207,132,80,.10),transparent 70%),
-    repeating-linear-gradient(135deg,rgba(239,231,220,.035) 0 1px,transparent 1px 18px),
-    repeating-linear-gradient(45deg,rgba(239,231,220,.025) 0 1px,transparent 1px 18px),
-    linear-gradient(180deg,rgba(11,10,9,.62) 0%,rgba(11,10,9,.45) 35%,rgba(11,10,9,.55) 70%,rgba(11,10,9,.82) 100%)}
-.bg .rail{position:absolute;left:0;right:0;height:6px;background:repeating-linear-gradient(90deg,var(--turf) 0 28px,transparent 28px 40px);opacity:.28}
-.bg .rail.top{top:0}.bg .rail.bottom{bottom:0}
+    repeating-linear-gradient(135deg,rgba(239,231,220,.04) 0 1px,transparent 1px 18px),
+    repeating-linear-gradient(45deg,rgba(239,231,220,.03) 0 1px,transparent 1px 18px),
+    radial-gradient(120% 80% at 50% 50%,transparent 40%,rgba(11,10,9,.55) 100%),
+    linear-gradient(180deg,rgba(11,10,9,.62) 0%,rgba(11,10,9,.50) 35%,rgba(11,10,9,.58) 70%,rgba(11,10,9,.80) 100%)}
+@keyframes bgzoom{from{transform:scale(1)}to{transform:scale(1.08) translate(-1%,-1.5%)}}
+.bg > *{z-index:2}
+.bg .orb{position:absolute;width:70vmax;height:70vmax;border-radius:50%;mix-blend-mode:screen;will-change:transform;animation:drift 26s ease-in-out infinite alternate}
+.bg .orb.o1{left:-28vmax;top:-30vmax;background:radial-gradient(closest-side,rgba(207,132,80,.42),rgba(207,132,80,.12) 55%,transparent 72%)}
+.bg .orb.o2{right:-32vmax;top:18%;background:radial-gradient(closest-side,rgba(109,138,151,.38),rgba(109,138,151,.10) 55%,transparent 72%);animation-duration:34s;animation-direction:alternate-reverse}
+.bg .orb.o3{left:12%;bottom:-42vmax;background:radial-gradient(closest-side,rgba(207,132,80,.30),rgba(207,132,80,.08) 55%,transparent 72%);animation-duration:42s}
+@keyframes drift{from{transform:translate3d(0,0,0) scale(1)}to{transform:translate3d(14vmax,9vmax,0) scale(1.18)}}
+.bg .sweep{position:absolute;inset:-60% -60%;background:linear-gradient(115deg,transparent 46%,rgba(239,231,220,.07) 50%,transparent 54%);animation:sweep 13s linear infinite;will-change:transform}
+@keyframes sweep{from{transform:translateX(-45%)}to{transform:translateX(45%)}}
+.bg .embers{position:absolute;inset:0;width:100%;height:100%}
+.bg-gear{position:absolute;inset:0;transform:translate3d(0,calc(var(--sy,0) * -0.06px),0);will-change:transform}
+.bg-gear svg{position:absolute;color:var(--turf);opacity:.11;fill:none;stroke:currentColor;stroke-width:2;stroke-linecap:round;animation:gspin var(--d,60s) linear infinite}
+.bg-gear svg.float{animation:floaty var(--d,14s) ease-in-out infinite alternate;--r:9deg}
+.bg-gear svg.slate{color:var(--signal);opacity:.13}
+@keyframes gspin{to{transform:rotate(360deg)}}
+.bg .rail{position:absolute;left:0;right:0;height:6px;z-index:3;background:repeating-linear-gradient(90deg,var(--turf) 0 28px,transparent 28px 40px);opacity:.4;background-size:40px 6px;animation:railmove 2.4s linear infinite}
+.bg .rail.top{top:0}.bg .rail.bottom{bottom:0;animation-direction:reverse}
+@keyframes railmove{to{background-position:40px 0}}
+
+/* hero background photo with a slow zoom */
+.hero-bg{position:absolute;inset:0;z-index:0;overflow:hidden;-webkit-mask-image:linear-gradient(180deg,#000 45%,transparent 100%);mask-image:linear-gradient(180deg,#000 45%,transparent 100%)}
+.hero-bg img{width:100%;height:100%;object-fit:cover;object-position:center 40%;opacity:.55;animation:kenburns 30s ease-in-out infinite alternate;will-change:transform}
+.hero-bg::after{content:"";position:absolute;inset:0;background:linear-gradient(90deg,rgba(11,10,9,.88) 0%,rgba(11,10,9,.62) 45%,rgba(11,10,9,.30) 100%),linear-gradient(180deg,rgba(11,10,9,.55) 0%,transparent 30%)}
+@keyframes kenburns{from{transform:scale(1.03)}to{transform:scale(1.14) translate(-1.5%,-1%)}}
+
+/* giant outlined words gliding behind a section */
+.section[data-watermark]{position:relative;overflow-x:clip}
+.section[data-watermark]::before{content:attr(data-watermark);position:absolute;top:clamp(.5rem,3vw,2.5rem);left:0;white-space:nowrap;font-family:var(--display);font-weight:900;font-size:clamp(6rem,19vw,17rem);line-height:.8;text-transform:uppercase;letter-spacing:.02em;color:transparent;-webkit-text-stroke:1.5px rgba(207,132,80,.16);pointer-events:none;animation:wm 70s linear infinite;z-index:0;will-change:transform}
+.section[data-watermark]:nth-of-type(even)::before{-webkit-text-stroke-color:rgba(109,138,151,.2);animation-direction:reverse}
+.section[data-watermark] > .wrap{position:relative;z-index:1}
+@keyframes wm{from{transform:translateX(0)}to{transform:translateX(-50%)}}
+
+/* brushed-copper shimmer on accent words (the logo's metal) */
+.hero h1 .accent,.h2 em,.shop-hero h1 em,.band-copy h2 em,.manifesto-grid .big em{background:linear-gradient(100deg,#8a4d24 0%,#cf8450 25%,#f6cfa6 45%,#cf8450 60%,#8a4d24 100%);background-size:220% 100%;-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;animation:shimmer 7s linear infinite}
+@keyframes shimmer{from{background-position:120% 0}to{background-position:-100% 0}}
+
+/* light sweep across primary buttons, rotating rim on the featured plan */
+.btn-primary{position:relative;overflow:hidden;isolation:isolate}
+.btn-primary::after{content:"";position:absolute;inset:0;z-index:-1;background:linear-gradient(110deg,transparent 35%,rgba(255,255,255,.45) 50%,transparent 65%);transform:translateX(-130%);animation:shine 5.5s var(--ease) infinite}
+@keyframes shine{0%,62%{transform:translateX(-130%)}100%{transform:translateX(130%)}}
+@property --ang{syntax:"<angle>";inherits:false;initial-value:0deg}
+.plan.hot{background:conic-gradient(from var(--ang),rgba(207,132,80,.95),rgba(109,138,151,.55),rgba(207,132,80,.12),rgba(207,132,80,.95));animation:rim 6s linear infinite;border-color:transparent}
+@keyframes rim{to{--ang:360deg}}
+
 .band-steel{background:rgba(22,20,18,.82);border-block:1px solid var(--line);backdrop-filter:none}
 .marquee{background:rgba(22,20,18,.9)}
 
@@ -292,6 +332,8 @@ p{margin:0}
 @media (prefers-reduced-motion:reduce){
   html{scroll-behavior:auto}
   .marquee-track,.gear svg,.marquee-track svg,.open-badge.is-open::before,.chat-launch::after,.chat-msg.typing span{animation:none}
+  .bg::before,.bg .orb,.bg .sweep,.bg-gear svg,.bg .rail,.hero-bg img,.section[data-watermark]::before,.hero h1 .accent,.h2 em,.shop-hero h1 em,.band-copy h2 em,.manifesto-grid .big em,.btn-primary::after,.plan.hot{animation:none}
+  .bg .embers{display:none}
   .will-reveal{opacity:1;transform:none;filter:none}
   .bar-divider .plate{transform:none;transition:none}
   *{transition-duration:.01ms!important}
