@@ -1,0 +1,379 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Skova Shop</title>
+<meta name="description" content="Supplements, boxing and lifting gear, and Skova Fitness merch. Order on WhatsApp, pick up at the gym desk or get delivery in the city.">
+<meta property="og:title" content="Skova Shop. Fuel, gear, colours.">
+<meta property="og:description" content="Supplements, gloves, belts and Skova merch. Order on WhatsApp and pick up at the desk.">
+<meta property="og:type" content="website">
+<meta name="theme-color" content="#0a0b0a">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%230a0b0a'/%3E%3Cpath d='M20 12h24l-8 18h10L18 52l8-18H14z' fill='%235bd142'/%3E%3C/svg%3E">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Big+Shoulders+Display:wght@700;800;900&family=Barlow:wght@400;500;600&family=Barlow+Condensed:wght@500;600;700&display=swap">
+<link rel="stylesheet" href="css/site.css">
+<style>
+/* ---- shop page only ---- */
+.shop-hero{position:relative;padding-top:calc(env(safe-area-inset-top,0px) + 8.5rem);padding-bottom:clamp(2rem,5vw,4rem);overflow:hidden}
+.shop-hero .wrap{position:relative;z-index:1;display:grid;gap:1.6rem}
+.shop-hero h1{font-size:clamp(3.6rem,11vw,9.5rem);font-weight:900;line-height:.88}
+.shop-hero h1 em{font-style:normal;color:var(--turf)}
+.shop-hero h1 .mask{display:block;overflow:hidden;padding-bottom:.06em;margin-bottom:-.06em}
+.shop-hero h1 .line{display:block;animation:rise 1s var(--ease) both}
+.shop-hero h1 .mask:nth-child(2) .line{animation-delay:.1s}
+@keyframes rise{from{transform:translateY(105%)}to{transform:none}}
+.shop-hero .glow{position:absolute;inset:auto -10% -30% auto;width:60vw;height:60vw;max-width:800px;max-height:800px;border-radius:50%;background:radial-gradient(closest-side,rgba(91,209,66,.14),transparent 70%);filter:blur(20px);pointer-events:none}
+.ship{display:flex;flex-wrap:wrap;gap:.6rem}
+.ship span{display:inline-flex;align-items:center;gap:.5rem;font-family:var(--label);font-size:.78rem;letter-spacing:.14em;text-transform:uppercase;color:var(--muted);border:1px solid var(--line-strong);border-radius:999px;padding:.45em .9em}
+.ship span::before{content:"";width:6px;height:6px;border-radius:50%;background:var(--turf)}
+
+/* bag button in nav */
+.bag-btn{position:relative;display:inline-flex;align-items:center;gap:.5rem;border:1px solid var(--line-strong);background:rgba(237,234,227,.04);color:var(--bone);border-radius:999px;padding:.45rem .9rem .45rem .8rem;font-family:var(--label);font-weight:600;font-size:.85rem;letter-spacing:.12em;text-transform:uppercase;cursor:pointer;margin-left:.4rem;transition:border-color .5s var(--ease)}
+.bag-btn:hover{border-color:var(--bone)}
+.bag-btn svg{width:17px;height:17px}
+.bag-btn .count{min-width:1.5rem;height:1.5rem;padding:0 .4rem;border-radius:999px;background:var(--turf);color:var(--turf-ink);display:grid;place-items:center;font-size:.75rem;font-variant-numeric:tabular-nums;transition:transform .6s var(--spring)}
+.bag-btn .count.bump{animation:bump .6s var(--spring)}
+@keyframes bump{30%{transform:scale(1.4)}100%{transform:none}}
+
+/* filter tabs */
+.filters{position:sticky;top:calc(env(safe-area-inset-top,0px) + 5.4rem);z-index:30;display:flex;flex-wrap:wrap;gap:.4rem;padding:.4rem;border-radius:999px;background:rgba(14,16,15,.75);border:1px solid var(--line-strong);backdrop-filter:blur(16px);-webkit-backdrop-filter:blur(16px);width:max-content;max-width:100%}
+.filters button{border:0;background:transparent;color:var(--muted);border-radius:999px;padding:.55rem 1rem;font-family:var(--label);font-weight:600;font-size:.85rem;letter-spacing:.14em;text-transform:uppercase;cursor:pointer;transition:background .5s var(--ease),color .5s var(--ease)}
+.filters button[aria-pressed="true"]{background:var(--turf);color:var(--turf-ink)}
+.filters button:hover:not([aria-pressed="true"]){color:var(--bone)}
+.shop-head{display:flex;flex-wrap:wrap;gap:1rem;align-items:center;justify-content:space-between;margin-bottom:2rem}
+.shop-head .meta{color:var(--muted);font-family:var(--label);letter-spacing:.14em;text-transform:uppercase;font-size:.78rem}
+
+/* product grid */
+.grid{display:grid;grid-template-columns:repeat(4,1fr);gap:1rem}
+.card{border:1px solid var(--line);border-radius:var(--r-xl);padding:.45rem;background:rgba(237,234,227,.03);transition:transform .8s var(--ease),border-color .8s var(--ease),opacity .6s var(--ease);display:flex}
+.card:hover{transform:translateY(-4px);border-color:var(--line-strong)}
+.card.out{opacity:0;transform:scale(.96);pointer-events:none;position:absolute;visibility:hidden}
+.card-in{flex:1;border-radius:calc(var(--r-xl) - .45rem);background:var(--steel);overflow:hidden;display:grid;grid-template-rows:auto 1fr;box-shadow:inset 0 1px 1px rgba(255,255,255,.08)}
+.pic{position:relative;aspect-ratio:1;background:radial-gradient(60% 60% at 50% 40%,rgba(91,209,66,.12),transparent);display:grid;place-items:center;overflow:hidden}
+.pic img{width:100%;height:100%;object-fit:cover;transition:transform 1.2s var(--ease)}
+.card:hover .pic img{transform:scale(1.06) rotate(-2deg)}
+.pic .ph{width:42%;color:var(--turf);opacity:.6;transition:transform .8s var(--spring)}
+.card:hover .pic .ph{transform:rotate(-12deg) scale(1.1)}
+.pic.light{background:#e9e7e1}
+.pic.light img{mix-blend-mode:multiply}
+.pic .badge{position:absolute;left:.9rem;top:.9rem;font-family:var(--label);font-weight:700;font-size:.7rem;letter-spacing:.18em;text-transform:uppercase;color:var(--turf-ink);background:var(--turf);border-radius:999px;padding:.35em .8em .3em}
+.body{padding:1.2rem 1.2rem 1.2rem;display:grid;gap:.7rem;align-content:start}
+.body .cat{font-family:var(--label);font-size:.7rem;letter-spacing:.2em;text-transform:uppercase;color:var(--dim)}
+.body h3{font-size:1.6rem;font-weight:800}
+.body p{color:var(--muted);font-size:.95rem}
+.sizes{display:flex;flex-wrap:wrap;gap:.35rem}
+.sizes button{border:1px solid var(--line-strong);background:transparent;color:var(--muted);border-radius:999px;padding:.3em .7em;font-family:var(--label);font-size:.75rem;letter-spacing:.1em;text-transform:uppercase;cursor:pointer;transition:background .4s var(--ease),color .4s var(--ease),border-color .4s var(--ease)}
+.sizes button[aria-pressed="true"]{background:var(--bone);color:var(--ink);border-color:var(--bone)}
+.buy{display:flex;justify-content:space-between;align-items:center;gap:.8rem;margin-top:.4rem}
+.price{font-family:var(--display);font-weight:900;font-size:1.7rem;letter-spacing:.02em;color:var(--turf);font-variant-numeric:tabular-nums}
+.add{display:inline-flex;align-items:center;gap:.6rem;border:1px solid var(--line-strong);background:rgba(237,234,227,.04);color:var(--bone);border-radius:999px;padding:.45rem .45rem .45rem 1rem;font-family:var(--label);font-weight:600;font-size:.8rem;letter-spacing:.12em;text-transform:uppercase;cursor:pointer;transition:background .5s var(--ease),color .5s var(--ease),border-color .5s var(--ease),transform .5s var(--ease)}
+.add .ic{display:grid;place-items:center;width:1.8rem;height:1.8rem;border-radius:50%;background:rgba(237,234,227,.08);transition:transform .6s var(--spring)}
+.add .ic svg{width:13px;height:13px}
+.add:hover{background:var(--turf);color:var(--turf-ink);border-color:var(--turf)}
+.add:hover .ic{background:rgba(10,31,8,.14);transform:rotate(90deg)}
+.add:active{transform:scale(.97)}
+.add.added{background:var(--turf);color:var(--turf-ink);border-color:var(--turf)}
+.fly{position:fixed;z-index:80;width:14px;height:14px;border-radius:50%;background:var(--turf);box-shadow:0 0 14px var(--turf);pointer-events:none;transition:transform .8s var(--ease),opacity .8s var(--ease)}
+
+/* bag drawer */
+.drawer-scrim{position:fixed;inset:0;z-index:65;background:rgba(10,11,10,.6);backdrop-filter:blur(6px);-webkit-backdrop-filter:blur(6px);opacity:0;visibility:hidden;transition:opacity .5s var(--ease),visibility 0s .5s}
+.drawer-scrim.open{opacity:1;visibility:visible;transition:opacity .5s var(--ease)}
+.drawer{position:fixed;top:0;right:0;bottom:0;z-index:66;width:min(440px,100%);padding:calc(env(safe-area-inset-top,0px) + 1rem) 1rem calc(env(safe-area-inset-bottom,0px) + 1rem);transform:translateX(102%);transition:transform .7s var(--ease);display:flex;flex-direction:column}
+.drawer.open{transform:none}
+.drawer .frame{flex:1;display:flex;flex-direction:column;padding:.45rem}
+.drawer .frame-in{flex:1;display:flex;flex-direction:column;padding:1.4rem;gap:1rem;overflow:hidden}
+.drawer-head{display:flex;justify-content:space-between;align-items:center}
+.drawer-head h2{font-size:2.2rem}
+.drawer-head button{border:1px solid var(--line-strong);background:transparent;color:var(--bone);border-radius:50%;width:38px;height:38px;cursor:pointer;display:grid;place-items:center}
+.drawer-head button svg{width:14px;height:14px}
+.lines{flex:1;overflow:auto;display:grid;gap:.6rem;align-content:start;padding-right:.2rem}
+.bag-line{display:grid;grid-template-columns:56px 1fr auto;gap:.8rem;align-items:center;padding:.7rem;border:1px solid var(--line);border-radius:14px;background:rgba(237,234,227,.025)}
+.bag-line .thumb{width:56px;height:56px;border-radius:10px;overflow:hidden;background:var(--steel-2);display:grid;place-items:center}
+.bag-line .thumb img{width:100%;height:100%;object-fit:cover}
+.bag-line .thumb svg{width:60%;color:var(--turf);opacity:.6}
+.bag-line b{display:block;font-family:var(--display);font-weight:800;font-size:1.15rem;text-transform:uppercase;letter-spacing:.03em}
+.bag-line small{color:var(--muted);font-size:.85rem}
+.qty{display:inline-flex;align-items:center;border:1px solid var(--line-strong);border-radius:999px}
+.qty button{border:0;background:transparent;color:var(--bone);width:30px;height:30px;cursor:pointer;font-size:1.1rem;line-height:1}
+.qty span{min-width:1.6rem;text-align:center;font-variant-numeric:tabular-nums;font-size:.95rem}
+.bag-line .rm{border:0;background:transparent;color:var(--dim);cursor:pointer;font-family:var(--label);font-size:.7rem;letter-spacing:.14em;text-transform:uppercase;padding:.2em 0;justify-self:end}
+.bag-line .rm:hover{color:var(--signal)}
+.empty{color:var(--muted);display:grid;gap:.6rem;justify-items:center;text-align:center;padding:2rem 0}
+.empty svg{width:64px;color:var(--turf);opacity:.5}
+.drawer-foot{display:grid;gap:.8rem;border-top:1px solid var(--line);padding-top:1rem}
+.total{display:flex;justify-content:space-between;align-items:baseline}
+.total b{font-family:var(--display);font-weight:900;font-size:2rem;font-variant-numeric:tabular-nums}
+.total span{color:var(--muted);font-family:var(--label);letter-spacing:.14em;text-transform:uppercase;font-size:.75rem}
+.drawer-foot .seg label{font-size:.78rem}
+.drawer-foot small{color:var(--dim);font-size:.82rem}
+.drawer-foot .btn{justify-content:space-between}
+
+/* trust strip */
+.trust{display:grid;grid-template-columns:repeat(3,1fr);gap:1rem}
+.trust div{display:flex;gap:1rem;align-items:flex-start;padding:1.3rem 1.4rem;border:1px solid var(--line);border-radius:var(--r-lg)}
+.trust b{display:block;font-family:var(--display);font-weight:800;font-size:1.4rem;text-transform:uppercase;letter-spacing:.03em}
+.trust p{color:var(--muted);font-size:.95rem}
+.trust .glyph{flex:none;width:38px;height:38px;border-radius:50%;display:grid;place-items:center;border:1px solid rgba(91,209,66,.3);color:var(--turf)}
+.trust .glyph svg{width:17px;height:17px}
+
+@media (max-width:960px){
+  .grid{grid-template-columns:repeat(2,1fr)}
+  .trust{grid-template-columns:1fr}
+  .nav .bag-btn{display:inline-flex}
+  .nav .bag-btn .lbl{display:none}
+  .filters{top:calc(env(safe-area-inset-top,0px) + 5rem)}
+}
+@media (max-width:560px){
+  .grid{grid-template-columns:1fr}
+  .shop-hero{padding-top:calc(env(safe-area-inset-top,0px) + 7rem)}
+}
+@media (prefers-reduced-motion:reduce){
+  .shop-hero h1 .line,.bag-btn .count.bump{animation:none}
+  .fly{display:none}
+}
+</style>
+</head>
+<body>
+<div class="grain" aria-hidden="true"></div>
+<div class="progress" aria-hidden="true"></div>
+
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <defs>
+    <symbol id="i-dumbbell" viewBox="0 0 120 48"><g fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round"><rect x="8" y="10" width="14" height="28" rx="3"/><rect x="22" y="14" width="10" height="20" rx="2"/><rect x="98" y="10" width="14" height="28" rx="3"/><rect x="88" y="14" width="10" height="20" rx="2"/><path d="M32 24h56M2 18v12M118 18v12"/></g></symbol>
+    <symbol id="i-kettlebell" viewBox="0 0 80 96"><g fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round"><path d="M22 42c-5-20 2-34 18-34s23 14 18 34"/><circle cx="40" cy="62" r="30"/></g></symbol>
+    <symbol id="i-plate" viewBox="0 0 80 80"><g fill="none" stroke="currentColor" stroke-width="3"><circle cx="40" cy="40" r="36"/><circle cx="40" cy="40" r="22"/><circle cx="40" cy="40" r="7"/><path d="M40 4v14M40 62v14M4 40h14M62 40h14"/></g></symbol>
+    <symbol id="i-barbell" viewBox="0 0 200 48"><g fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round"><path d="M2 24h196"/><rect x="24" y="6" width="10" height="36" rx="2"/><rect x="36" y="10" width="8" height="28" rx="2"/><rect x="166" y="6" width="10" height="36" rx="2"/><rect x="156" y="10" width="8" height="28" rx="2"/></g></symbol>
+    <symbol id="i-shaker" viewBox="0 0 48 80"><g fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M12 14h24l-3 58H15zM10 14h28M16 6h16v8H16z"/><path d="M15 34h18"/></g></symbol>
+    <symbol id="i-tee" viewBox="0 0 80 80"><g fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M28 12l12 6 12-6 18 10-8 14-8-4v36H26V32l-8 4-8-14z"/></g></symbol>
+    <symbol id="i-bag" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M5 8h14l-1 12H6zM9 8V6a3 3 0 0 1 6 0v2"/></g></symbol>
+    <symbol id="i-bolt" viewBox="0 0 64 64"><path d="M20 12h24l-8 18h10L18 52l8-18H14z" fill="currentColor"/></symbol>
+  </defs>
+</svg>
+
+<header class="nav">
+  <div class="nav-pill">
+    <a class="brand" href="index.html" aria-label="Skova Fitness home"><svg viewBox="0 0 64 64" aria-hidden="true"><use href="#i-bolt" style="color:#5bd142"/></svg>Skova</a>
+    <ul class="nav-links" id="nav-links">
+      <li><a href="index.html">Gym</a></li>
+      <li><a href="#supplements" data-filter-link="supplements">Supplements</a></li>
+      <li><a href="#gear" data-filter-link="gear">Gear</a></li>
+      <li><a href="#merch" data-filter-link="merch">Merch</a></li>
+    </ul>
+    <button class="bag-btn" id="bag-open" aria-label="Open your bag"><svg><use href="#i-bag"/></svg><span class="lbl">Bag</span><span class="count" id="bag-count">0</span></button>
+    <button class="burger" id="burger" aria-label="Open menu" aria-expanded="false" aria-controls="menu"><span></span><span></span><span></span></button>
+  </div>
+</header>
+<div class="menu" id="menu">
+  <ul>
+    <li style="--i:1"><a href="index.html">Gym</a></li>
+    <li style="--i:2"><a href="#supplements" data-filter-link="supplements">Supplements</a></li>
+    <li style="--i:3"><a href="#gear" data-filter-link="gear">Gear</a></li>
+    <li style="--i:4"><a href="#merch" data-filter-link="merch">Merch</a></li>
+    <li style="--i:5"><a href="index.html#visit" style="color:var(--turf)">Free visit</a></li>
+  </ul>
+</div>
+
+<main id="top">
+
+<section class="shop-hero" data-top-sentinel>
+  <div class="glow" aria-hidden="true"></div>
+  <div class="gear-field" aria-hidden="true">
+    <div class="gear" style="left:70%;top:10%;--s:180px;--p:1.2;--d:9s;--r:8deg"><svg><use href="#i-barbell"/></svg></div>
+    <div class="gear" style="left:88%;top:60%;--s:70px;--p:.8;--d:12s;--r:-20deg"><svg><use href="#i-shaker"/></svg></div>
+    <div class="gear" style="left:56%;top:64%;--s:90px;--p:1.5;--d:10s;--r:14deg"><svg><use href="#i-kettlebell"/></svg></div>
+    <div class="gear" style="left:4%;top:70%;--s:80px;--p:.9;--d:11s;--r:30deg"><svg><use href="#i-plate"/></svg></div>
+  </div>
+  <div class="wrap">
+    <span class="eyebrow">Skova shop</span>
+    <h1><span class="mask"><span class="line">Fuel, gear,</span></span><span class="mask"><span class="line"><em>colours.</em></span></span></h1>
+    <p class="lede">What you need on the floor and what you wear off it. Add to your bag, send the order on WhatsApp, and pick it up at the desk on your next session.</p>
+    <div class="ship"><span id="ship-line">Pick up at the gym desk</span><span>Pay at the desk or on delivery</span><span>Order on WhatsApp</span></div>
+    <span class="sample" id="shop-sample" hidden>Sample catalogue and prices · replace with real stock</span>
+  </div>
+</section>
+
+<section class="section" id="catalogue" style="padding-top:1rem">
+  <div class="wrap">
+    <div class="shop-head">
+      <div class="filters" role="group" aria-label="Filter products">
+        <button type="button" data-filter="all" aria-pressed="true">All</button>
+        <button type="button" data-filter="supplements" aria-pressed="false">Supplements</button>
+        <button type="button" data-filter="gear" aria-pressed="false">Gear</button>
+        <button type="button" data-filter="merch" aria-pressed="false">Merch</button>
+      </div>
+      <span class="meta" id="count-meta"></span>
+    </div>
+    <div class="grid" id="grid" style="position:relative"></div>
+    <p class="lede" id="grid-empty" hidden style="margin-top:2rem">The shop is being stocked. Ask at the desk for what is available today.</p>
+  </div>
+</section>
+
+<section class="section" style="padding-top:0">
+  <div class="wrap">
+    <div class="trust">
+      <div><span class="glyph"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M4 7l8-4 8 4v6c0 5-3.5 8-8 9-4.5-1-8-4-8-9z"/><path d="M9 12l2 2 4-4"/></svg></span><div><b>Sealed and genuine</b><p>Supplements come sealed from the distributor. Check the seal and the date at the desk before you take it.</p></div></div>
+      <div><span class="glyph"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M3 7h11v9H3zM14 10h4l3 3v3h-7z"/><circle cx="7" cy="18" r="1.6"/><circle cx="17" cy="18" r="1.6"/></svg></span><div><b>Pick up or deliver</b><p id="trust-delivery">Collect at the desk on your next session, or ask about delivery inside the city.</p></div></div>
+      <div><span class="glyph"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M4 12a8 8 0 1 0 3-6.2"/><path d="M4 4v5h5"/></svg></span><div><b>Wrong size? Swap it</b><p>Unworn merch with tags can be exchanged at the desk within seven days.</p></div></div>
+    </div>
+  </div>
+</section>
+
+</main>
+
+<div class="drawer-scrim" id="scrim"></div>
+<aside class="drawer" id="drawer" aria-label="Your bag" aria-hidden="true">
+  <div class="frame"><div class="frame-in">
+    <div class="drawer-head"><h2>Your bag</h2><button type="button" id="bag-close" aria-label="Close bag"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><path d="M3 3l10 10M13 3L3 13"/></svg></button></div>
+    <div class="lines" id="lines"></div>
+    <div class="drawer-foot">
+      <div class="total"><span>Subtotal</span><b id="total">NPR 0</b></div>
+      <div class="seg">
+        <input type="radio" name="fulfil" id="ful-pickup" value="Pick up at the desk" checked><label for="ful-pickup">Pick up</label>
+        <input type="radio" name="fulfil" id="ful-deliver" value="Deliver"><label for="ful-deliver">Deliver</label>
+      </div>
+      <small id="ful-note">Free pick-up at the gym desk. Delivery charges are confirmed on WhatsApp.</small>
+      <button class="btn btn-primary" id="order" type="button">Order on WhatsApp <span class="ic"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M2 8a6 6 0 1 1 3 5.2L2 14l.8-3A6 6 0 0 1 2 8z"/></svg></span></button>
+      <div class="toast" id="toast" role="status"></div>
+    </div>
+  </div></div>
+</aside>
+
+<div class="dock" id="dock">
+  <a class="btn btn-ghost" data-wa="Hi Skova, I have a question about the shop." href="index.html#visit">WhatsApp <span class="ic"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M2 8a6 6 0 1 1 3 5.2L2 14l.8-3A6 6 0 0 1 2 8z"/></svg></span></a>
+  <button class="btn btn-primary" id="dock-bag" type="button">Bag <span class="count" id="bag-count-2" style="display:none"></span><span class="ic"><svg><use href="#i-bag"/></svg></span></button>
+</div>
+<button class="totop" id="totop" aria-label="Back to top"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M8 13V3M3 8l5-5 5 5"/></svg></button>
+
+<footer class="footer">
+  <div class="wrap footer-grid">
+    <div>
+      <a class="brand" href="index.html"><svg viewBox="0 0 64 64" aria-hidden="true"><use href="#i-bolt" style="color:#5bd142"/></svg>Skova Fitness</a>
+      <p>Where weakness ends. © <span id="year">2026</span> Skova Fitness.</p>
+    </div>
+    <nav aria-label="Footer">
+      <a href="index.html">Gym</a><a href="index.html#membership">Membership</a><a href="index.html#visit">Visit</a>
+      <a href="https://www.instagram.com/skova_fitness/" target="_blank" rel="noopener">Instagram</a>
+      <a href="https://www.tiktok.com/@skova.fitness" target="_blank" rel="noopener">TikTok</a>
+      <a href="credits.html">Photo credits</a>
+    </nav>
+  </div>
+</footer>
+
+<script src="js/config.js"></script>
+<script src="js/site.js"></script>
+<script>
+(function(){
+  var S = window.Skova, $ = S.$, esc = S.esc;
+  var CATS = { supplements:"Supplements", gear:"Gear", merch:"Merch" };
+  var ICON = { supplements:"#i-shaker", gear:"#i-dumbbell", merch:"#i-tee" };
+  var prod = S.pick("products"), PRODUCTS = prod.data || [];
+  var byId = {}; PRODUCTS.forEach(function(p){ byId[p.id] = p; });
+  $("shop-sample").hidden = !prod.sample;
+  var delivery = S.pick("delivery");
+  if (delivery.data) { $("trust-delivery").textContent = delivery.data; $("ful-note").textContent = delivery.data; }
+
+  /* bag state (per browser, best effort) */
+  var bag = [];
+  try { bag = JSON.parse(localStorage.getItem("skova-bag") || "[]"); if (!Array.isArray(bag)) bag = []; } catch (e) { bag = []; }
+  bag = bag.filter(function(l){ return byId[l.id]; });
+  function save(){ try { localStorage.setItem("skova-bag", JSON.stringify(bag)); } catch (e) {} }
+  function qtyTotal(){ return bag.reduce(function(n, l){ return n + l.qty; }, 0); }
+  function subtotal(){ return bag.reduce(function(n, l){ return n + l.qty * byId[l.id].price; }, 0); }
+
+  /* product grid */
+  var grid = $("grid"), current = "all";
+  if (!PRODUCTS.length) { grid.hidden = true; $("grid-empty").hidden = false; document.querySelector(".filters").hidden = true; }
+  PRODUCTS.forEach(function(p){
+    var el = document.createElement("article"); el.className = "card"; el.setAttribute("data-cat", p.cat); el.id = "p-" + p.id;
+    var sizes = p.sizes ? "<div class='sizes' role='group' aria-label='Size'>" + p.sizes.map(function(s, i){ return "<button type='button' data-size='" + esc(s) + "' aria-pressed='" + (i === 0 ? "true" : "false") + "'>" + esc(s) + "</button>"; }).join("") + "</div>" : "";
+    el.innerHTML = "<div class='card-in'><div class='pic" + (p.light ? " light" : "") + "'>" +
+      (p.image ? "<img src='" + esc(p.image) + "' alt='" + esc(p.name) + "' loading='lazy' onerror=\"this.outerHTML='<svg class=ph><use href=" + ICON[p.cat] + "></use></svg>'\">" : "<svg class='ph'><use href='" + ICON[p.cat] + "'/></svg>") +
+      (p.badge ? "<span class='badge'>" + esc(p.badge) + "</span>" : "") +
+      "</div><div class='body'><span class='cat'>" + esc(CATS[p.cat] || p.cat) + "</span><h3>" + esc(p.name) + "</h3><p>" + esc(p.blurb) + "</p>" + sizes +
+      "<div class='buy'><span class='price'>" + esc(S.npr(p.price)) + "</span><button class='add' type='button' data-add='" + esc(p.id) + "'>Add <span class='ic'><svg viewBox='0 0 16 16' fill='none' stroke='currentColor' stroke-width='1.8' stroke-linecap='round'><path d='M8 3v10M3 8h10'/></svg></span></button></div></div></div>";
+    grid.appendChild(el);
+  });
+  function applyFilter(cat){
+    current = cat;
+    document.querySelectorAll("[data-filter]").forEach(function(b){ b.setAttribute("aria-pressed", b.getAttribute("data-filter") === cat ? "true" : "false"); });
+    var shown = 0;
+    grid.querySelectorAll(".card").forEach(function(c){ var on = cat === "all" || c.getAttribute("data-cat") === cat; c.classList.toggle("out", !on); if (on) shown++; });
+    $("count-meta").textContent = shown + (shown === 1 ? " item" : " items") + (cat === "all" ? "" : " · " + CATS[cat]);
+  }
+  document.querySelectorAll("[data-filter]").forEach(function(b){ b.addEventListener("click", function(){ applyFilter(b.getAttribute("data-filter")); }); });
+  document.querySelectorAll("[data-filter-link]").forEach(function(a){ a.addEventListener("click", function(e){ e.preventDefault(); applyFilter(a.getAttribute("data-filter-link")); $("catalogue").scrollIntoView({ behavior: S.reduce ? "auto" : "smooth" }); }); });
+  var hash = (location.hash || "").replace("#", "");
+  applyFilter(CATS[hash] ? hash : "all");
+
+  /* sizes */
+  grid.addEventListener("click", function(e){
+    var sb = e.target.closest("[data-size]"); if (!sb) return;
+    sb.parentElement.querySelectorAll("button").forEach(function(b){ b.setAttribute("aria-pressed", b === sb ? "true" : "false"); });
+  });
+
+  /* add to bag with a flying dot */
+  var bagBtn = $("bag-open"), countEl = $("bag-count");
+  grid.addEventListener("click", function(e){
+    var btn = e.target.closest("[data-add]"); if (!btn) return;
+    var id = btn.getAttribute("data-add"), card = btn.closest(".card");
+    var sel = card.querySelector("[data-size][aria-pressed='true']"), size = sel ? sel.getAttribute("data-size") : "";
+    var line = bag.filter(function(l){ return l.id === id && l.size === size; })[0];
+    if (line) line.qty++; else bag.push({ id: id, size: size, qty: 1 });
+    save(); render();
+    btn.classList.add("added"); btn.firstChild.nodeValue = "Added "; setTimeout(function(){ btn.classList.remove("added"); btn.firstChild.nodeValue = "Add "; }, 1200);
+    if (!S.reduce) {
+      var a = btn.getBoundingClientRect(), target = (getComputedStyle(bagBtn).display === "none" ? $("dock-bag") : bagBtn).getBoundingClientRect();
+      var dot = document.createElement("span"); dot.className = "fly"; dot.style.left = (a.left + a.width / 2) + "px"; dot.style.top = (a.top + a.height / 2) + "px"; document.body.appendChild(dot);
+      requestAnimationFrame(function(){ dot.style.transform = "translate(" + (target.left + target.width / 2 - a.left - a.width / 2) + "px," + (target.top + target.height / 2 - a.top - a.height / 2) + "px) scale(.4)"; dot.style.opacity = "0"; });
+      setTimeout(function(){ dot.remove(); countEl.classList.remove("bump"); void countEl.offsetWidth; countEl.classList.add("bump"); }, 800);
+    }
+  });
+
+  /* drawer */
+  var drawer = $("drawer"), scrim = $("scrim");
+  function openBag(){ drawer.classList.add("open"); scrim.classList.add("open"); drawer.setAttribute("aria-hidden","false"); document.body.style.overflow = "hidden"; }
+  function closeBag(){ drawer.classList.remove("open"); scrim.classList.remove("open"); drawer.setAttribute("aria-hidden","true"); document.body.style.overflow = ""; }
+  bagBtn.addEventListener("click", openBag); $("dock-bag").addEventListener("click", openBag);
+  $("bag-close").addEventListener("click", closeBag); scrim.addEventListener("click", closeBag);
+  document.addEventListener("keydown", function(e){ if (e.key === "Escape") closeBag(); });
+
+  var lines = $("lines");
+  function render(){
+    var n = qtyTotal(); countEl.textContent = n; var c2 = $("bag-count-2"); c2.textContent = n; c2.style.display = n ? "grid" : "none";
+    lines.innerHTML = "";
+    if (!bag.length) { lines.innerHTML = "<div class='empty'><svg><use href='#i-bag'/></svg><b>Your bag is empty</b><span>Add something from the shelf.</span></div>"; }
+    bag.forEach(function(l, i){
+      var p = byId[l.id];
+      var el = document.createElement("div"); el.className = "bag-line";
+      el.innerHTML = "<div class='thumb'>" + (p.image ? "<img src='" + esc(p.image) + "' alt='' onerror=\"this.outerHTML='<svg><use href=" + ICON[p.cat] + "></use></svg>'\">" : "<svg><use href='" + ICON[p.cat] + "'/></svg>") + "</div>" +
+        "<div><b>" + esc(p.name) + "</b><small>" + (l.size ? esc(l.size) + " · " : "") + esc(S.npr(p.price)) + "</small></div>" +
+        "<div style='display:grid;gap:.4rem;justify-items:end'><div class='qty'><button type='button' data-q='-1' data-i='" + i + "' aria-label='Less'>−</button><span>" + l.qty + "</span><button type='button' data-q='1' data-i='" + i + "' aria-label='More'>+</button></div><button class='rm' type='button' data-rm='" + i + "'>Remove</button></div>";
+      lines.appendChild(el);
+    });
+    $("total").textContent = S.npr(subtotal());
+  }
+  lines.addEventListener("click", function(e){
+    var q = e.target.closest("[data-q]"), rm = e.target.closest("[data-rm]");
+    if (q) { var i = +q.getAttribute("data-i"); bag[i].qty += +q.getAttribute("data-q"); if (bag[i].qty <= 0) bag.splice(i, 1); save(); render(); }
+    if (rm) { bag.splice(+rm.getAttribute("data-rm"), 1); save(); render(); }
+  });
+  render();
+
+  /* order on WhatsApp */
+  var toast = $("toast");
+  $("order").addEventListener("click", function(){
+    if (!bag.length) { toast.textContent = "Your bag is empty. Add something first."; toast.classList.add("show"); return; }
+    var ful = document.querySelector("input[name=fulfil]:checked").value;
+    var msg = "Hi Skova, I would like to order:\n" + bag.map(function(l){ var p = byId[l.id]; return "• " + l.qty + " × " + p.name + (l.size ? " (" + l.size + ")" : "") + " — " + S.npr(p.price * l.qty); }).join("\n") + "\nSubtotal: " + S.npr(subtotal()) + "\n" + ful + (ful === "Deliver" ? " to: (add your address)" : "") + "\nName: (add your name)";
+    if (SITE.whatsapp) { window.open(S.wa(msg), "_blank", "noopener"); toast.textContent = "Opening WhatsApp with your order. Add your name, press send, and the desk will confirm."; }
+    else { toast.textContent = "This demo is not connected to the gym’s WhatsApp yet, so nothing was sent. Here is the order it would send:\n\n" + msg; toast.style.whiteSpace = "pre-wrap"; }
+    toast.classList.add("show");
+  });
+
+  S.init();
+})();
+</script>
+</body>
+</html>
