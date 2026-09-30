@@ -50,6 +50,10 @@ window.SkovaChat = (function(){
       var rows = [1,3,6,12].filter(function(k){ return p.data[k]; }).map(function(k){ return "<b>" + k + " month" + (k > 1 ? "s" : "") + ":</b> " + esc(S.npr(p.data[k])); }).join("<br>");
       return "Every plan covers all four zones on both levels. Longer terms cost less per month." + "<br>" + rows + sampleNote(p) + "<br>See " + link("membership", "membership") + ".";
     },
+    offer: function(){
+      var P = SITE.promo; if (!P || !P.headline) return "There is no special offer running right now. For current rates, " + waHandoff("Hi Skova, are there any offers right now?") + ".";
+      return "Right now: <b>" + esc(P.headline) + " " + esc(P.sub || "") + "</b>" + (P.endsLabel ? ", until " + esc(P.endsLabel) : "") + ". " + esc(P.text || "") + " Want me to book your free visit so you can claim it? Say <b>book a visit</b>.";
+    },
     trial: function(){ return "Yes. You can book a free visit, walk both levels, try a station and decide afterwards. Want me to book one for you? Just say <b>book a visit</b>."; },
     zones: function(){ return "There are four zones under one roof: <b>weight training</b> on the ground floor, a <b>boxing and combat zone</b>, a <b>calisthenics rig</b> with bars and rings on the turf upstairs, and a <b>cardio deck</b>. Every membership covers all of them. " + link("zones", "See the zones") + "."; },
     weights: function(){ return "The ground floor is the weight-training floor: plate-loaded and pin-loaded machines, racks, benches, cables and a dumbbell wall. " + link("zones", "See the zones") + "."; },
@@ -90,7 +94,8 @@ window.SkovaChat = (function(){
     ["location",    ["where","address","location","located","direction","map","how to get","find you","near"]],
     ["freeze",      ["freeze","pause","hold","transfer","cancel","refund"]],
     ["pay",         ["pay","payment","esewa","khalti","cash","card","fonepay","bank"]],
-    ["price",       ["price","cost","fee","fees","rate","rates","how much","membership","plan","plans","monthly","yearly","annual","package","discount","offer","charges","npr","rs"]],
+    ["offer",       ["discount","offer","offers","promo","promotion","deal","sale","free admission","admission","15","coupon"]],
+    ["price",       ["price","cost","fee","fees","rate","rates","how much","membership","plan","plans","monthly","yearly","annual","package","charges","npr","rs"]],
     ["timetable",   ["timetable","schedule","class","classes","session today","sessions","what is on","whats on","today"]],
     ["boxing",      ["box","boxing","combat","kickbox","mma","punch","bag work","fight","muay"]],
     ["calisthenics",["calisthenic","pull up","pullup","pull-up","rings","muscle up","bodyweight","dip","rig"]],
