@@ -55,7 +55,48 @@ window.Skova = (function(){
     requestAnimationFrame(tick);
   }
 
+  /* load-time offer pop-up: once per session, retired automatically after SITE.promo.ends */
+  function promo(){
+    var P = SITE.promo; if (!P || !P.headline) return;
+    var today; try { today = new Intl.DateTimeFormat("en-CA", { timeZone: SITE.timezone, year: "numeric", month: "2-digit", day: "2-digit" }).format(new Date()); } catch (e) { today = new Date().toISOString().slice(0, 10); }
+    if (P.ends && today > P.ends) return;
+    try { if (sessionStorage.getItem("skova-promo") === "1") return; } catch (e) {}
+    var days = P.ends ? Math.round((Date.parse(P.ends + "T00:00:00Z") - Date.parse(today + "T00:00:00Z")) / 86400000) : null;
+    var onHome = !!document.getElementById("visit");
+    var PLATE = "<circle cx='50' cy='50' r='46'/><circle cx='50' cy='50' r='30'/><circle cx='50' cy='50' r='9'/><path d='M50 4v17M50 79v17M4 50h17M79 50h17'/>";
+    var el = document.createElement("div"); el.className = "promo"; el.setAttribute("role", "dialog"); el.setAttribute("aria-modal", "true"); el.setAttribute("aria-labelledby", "promo-title");
+    el.innerHTML =
+      "<div class='promo-scrim' data-close></div>" +
+      "<div class='promo-card'><div class='promo-in'>" +
+        "<svg class='promo-plate' viewBox='0 0 100 100' aria-hidden='true'>" + PLATE + "</svg><svg class='promo-plate b' viewBox='0 0 100 100' aria-hidden='true'>" + PLATE + "</svg>" +
+        "<button type='button' class='promo-x' data-close aria-label='Close this offer'><svg viewBox='0 0 16 16' fill='none' stroke='currentColor' stroke-width='1.8' stroke-linecap='round'><path d='M3 3l10 10M13 3L3 13'/></svg></button>" +
+        "<img class='promo-logo' src='img/logo-skova.png' alt='Skova Fitness'>" +
+        (P.eyebrow ? "<span class='promo-eyebrow'>" + esc(P.eyebrow) + "</span>" : "") +
+        "<h2 class='promo-head' id='promo-title'>" + esc(P.headline) + "</h2>" +
+        (P.sub ? "<p class='promo-sub'>" + esc(P.sub) + "</p>" : "") +
+        (P.text ? "<p class='promo-text'>" + esc(P.text) + "</p>" : "") +
+        (days !== null ? "<span class='promo-count'>" + (days > 1 ? "<b>" + days + "</b> days left" : days === 1 ? "<b>1</b> day left" : "Ends <b>today</b>") + (P.endsLabel ? " · until " + esc(P.endsLabel) : "") + "</span>" : "") +
+        "<div class='promo-actions'><a class='btn btn-primary' data-close href='" + (onHome ? "#visit" : "index.html#visit") + "'>" + esc(P.cta || "Claim the offer") + " <span class='ic'><svg viewBox='0 0 16 16' fill='none' stroke='currentColor' stroke-width='1.6' stroke-linecap='round' stroke-linejoin='round'><path d='M3 13 13 3M6 3h7v7'/></svg></span></a>" +
+          (SITE.whatsapp ? "<a class='btn btn-ghost' data-close target='_blank' rel='noopener' href='" + wa("Hi Skova, I would like to claim the " + P.headline + " " + (P.sub || "") + " offer.") + "'>WhatsApp us <span class='ic'><svg viewBox='0 0 16 16' fill='none' stroke='currentColor' stroke-width='1.6' stroke-linecap='round' stroke-linejoin='round'><path d='M2 8a6 6 0 1 1 3 5.2L2 14l.8-3A6 6 0 0 1 2 8z'/></svg></span></a>" : "") + "</div>" +
+        "<button type='button' class='promo-later' data-close>Maybe later</button>" +
+        (P.note ? "<small class='promo-note'>" + esc(P.note) + "</small>" : "") +
+      "</div></div>";
+    document.body.appendChild(el);
+    var lastFocus = null;
+    function close(){ el.classList.remove("open"); document.body.style.overflow = ""; document.removeEventListener("keydown", onKey); try { sessionStorage.setItem("skova-promo", "1"); } catch (e) {} if (lastFocus && lastFocus.focus) lastFocus.focus(); setTimeout(function(){ el.remove(); }, 700); }
+    function onKey(e){
+      if (e.key === "Escape") return close();
+      if (e.key !== "Tab") return;
+      var f = el.querySelectorAll("a[href],button"), first = f[0], last = f[f.length - 1];
+      if (e.shiftKey && document.activeElement === first) { e.preventDefault(); last.focus(); } else if (!e.shiftKey && document.activeElement === last) { e.preventDefault(); first.focus(); }
+    }
+    el.addEventListener("click", function(e){ if (e.target.closest("[data-close]")) close(); });
+    setTimeout(function(){ lastFocus = document.activeElement; el.classList.add("open"); document.body.style.overflow = "hidden"; document.addEventListener("keydown", onKey); var x = el.querySelector(".promo-x"); if (x) x.focus(); }, reduce ? 300 : 1400);
+  }
+
   function init(){
+    promo();
+
     /* year */
     var y = $("year"); if (y) y.textContent = new Date().getFullYear();
 
