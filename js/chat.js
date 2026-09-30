@@ -201,7 +201,7 @@ window.SkovaChat = (function(){
         "<svg class='ico-close' viewBox='0 0 16 16' fill='none' stroke='currentColor' stroke-width='1.8' stroke-linecap='round'><path d='M3 3l10 10M13 3L3 13'/></svg>" +
       "</button>" +
       "<section class='chat-panel' id='chat-panel' role='dialog' aria-label='Skova assistant' aria-hidden='true'>" +
-        "<header class='chat-head'><span class='chat-avatar'><svg viewBox='0 0 64 64' aria-hidden='true'><path d='M20 12h24l-8 18h10L18 52l8-18H14z' fill='currentColor'/></svg></span>" +
+        "<header class='chat-head'><span class='chat-avatar'><img src='img/logo-avatar.png' alt=''></span>" +
           "<div><b>Skova assistant</b><small>Automated answers · hands off to the desk</small></div>" +
           "<button type='button' class='chat-x' aria-label='Close the assistant'><svg viewBox='0 0 16 16' fill='none' stroke='currentColor' stroke-width='1.8' stroke-linecap='round'><path d='M3 3l10 10M13 3L3 13'/></svg></button></header>" +
         "<div class='chat-list' role='log' aria-live='polite'></div>" +
