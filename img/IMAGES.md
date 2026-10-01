@@ -13,6 +13,20 @@ Premium catalogue items returned HTTP 403 on this account, so every stock file b
 | skova-exterior-dusk.webp | 1360×1020, 215 KB | Building at dusk. Supplied by the client. |
 | skova-floor-from-mezzanine.webp | 765×1020, 208 KB | Machine floor from the mezzanine. Supplied by the client. |
 
+## The gym's own photos, batch 2 (supplied 2026-10-01)
+
+| File | Size | Used on | Notes |
+|---|---|---|---|
+| gallery-floor-wide.jpg | 1600×1200 | gallery, home band, home zone tiles | Floor from the mezzanine. Members visible at a distance. |
+| gallery-mural.jpg | 1600×1200 | gallery, home "look closer" | The mural; members reflected in the mirror below. |
+| gallery-machines.jpg | 1600×1200 | gallery, home zone 1 card | Plate-loaded machines. |
+| gallery-cardio-turf.jpg | 1600×1200 | gallery, home zone 4 card | Treadmills on turf, one member. |
+| gallery-turf-zone.jpg | 1000×1333 | gallery, home "look closer" | Turf zone with three people, faces visible. Confirm they are happy to be on the site. |
+| gallery-no-pain-no-gain.jpg | 1000×1333 | gallery, home "look closer" | Wall sign. |
+| gallery-you-vs-you.jpg | 1000×1333 | gallery, home "look closer" | Wall sign. |
+
+Originals are kept at `clients/skova-fitness/photos-original/` (not part of the site). No credit line needed: the gym owns them.
+
 ## Stock photos (Freepik free licence, attribution required)
 
 | File | Size | Source page | Author | Credit line | Alt text on the page |
@@ -21,8 +35,8 @@ Premium catalogue items returned HTTP 403 on this account, so every stock file b
 | athlete-female-portrait.jpg | 1200×1500, 91 KB | magnific.com/free-photo/woman-posing-with-dumbbells-gym_26589216.htm | ArtPhoto_studio | Image by ArtPhoto_studio on Freepik | A muscular woman holding a pair of dumbbells at her sides in a dark gym |
 | athlete-female-boxing.jpg | 1600×1000, 122 KB | magnific.com/free-photo/dark-photo-young-pretty-woman-dark-gym-which-has-training-using-punching-bag_24863778.htm | fxquadro | Image by fxquadro on Freepik | A woman in hand wraps working a heavy bag in a dark gym |
 | athlete-male-rings.jpg | 1600×1000, 171 KB | magnific.com/free-photo/athletic-man-with-muscular-body-doing-gymnastic-exercise-rings-shows-horizontal-hang-abandoned-industrial-building_30806556.htm | fxquadro | Image by fxquadro on Freepik | A man holding a horizontal hang on gymnastic rings in an industrial hall |
-| athlete-female-cardio.jpg | 1600×1000, 127 KB | magnific.com/free-photo/sporty-woman-running-treadmill-gym_27334478.htm | senivpetro | Image by senivpetro on Freepik | A woman running on a treadmill in a dark gym |
-| athlete-male-deadlift-wide.jpg | 2100×900, 101 KB | magnific.com/free-photo/muscular-build-man-performing-deadlift-while-having-weight-training-gym_25743531.htm | Drazen Zigic | Image by Drazen Zigic on Freepik | A man mid-deadlift with a loaded barbell in a dark gym |
+| athlete-female-cardio.jpg (no longer used; replaced by the gym's own treadmill photo) | 1600×1000, 127 KB | magnific.com/free-photo/sporty-woman-running-treadmill-gym_27334478.htm | senivpetro | Image by senivpetro on Freepik | A woman running on a treadmill in a dark gym |
+| athlete-male-deadlift-wide.jpg (no longer used; replaced by the gym's own floor photo) | 2100×900, 101 KB | magnific.com/free-photo/muscular-build-man-performing-deadlift-while-having-weight-training-gym_25743531.htm | Drazen Zigic | Image by Drazen Zigic on Freepik | A man mid-deadlift with a loaded barbell in a dark gym |
 | product-gloves.jpg | 1000×1000, 68 KB | magnific.com/free-photo/view-pair-boxing-gloves_41554006.htm | Freepik | Image by Freepik | A pair of black boxing gloves resting in a ring corner |
 | product-whey.jpg | 1000×1000, 20 KB | magnific.com/free-photo/protein-powder_416182918.htm | qalebstudio | Image by qalebstudio on Freepik | An unlabelled black supplement tub on a white background |
 | product-creatine.jpg | 1000×1000, 285 KB | magnific.com/free-photo/top-view-spoons-with-powder_5240839.htm | Freepik | Image by Freepik | Three measuring spoons of white powder on a dark surface |
