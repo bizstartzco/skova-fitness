@@ -1,0 +1,265 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Skova Fitness gallery</title>
+<meta name="description" content="Inside Skova Fitness: the two-level floor, the Viking mural, the turf zone, the cardio deck and the walls that keep you going. Real photos of the gym.">
+<meta property="og:title" content="Inside Skova Fitness">
+<meta property="og:description" content="The floor, the mural, the turf and the walls. Real photos of the gym.">
+<meta property="og:image" content="img/gallery-floor-wide.jpg">
+<meta property="og:type" content="website">
+<meta name="theme-color" content="#0b0a09">
+<link rel="icon" type="image/png" href="img/favicon.png">
+<link rel="apple-touch-icon" href="img/favicon.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Big+Shoulders+Display:wght@700;800;900&family=Barlow:wght@400;500;600&family=Barlow+Condensed:wght@500;600;700&display=swap">
+<link rel="stylesheet" href="css/site.css">
+<style>
+/* ---- gallery page only ---- */
+.ghero{position:relative;padding-top:calc(env(safe-area-inset-top,0px) + 8.5rem);padding-bottom:0;overflow:hidden}
+.ghero .wrap{position:relative;z-index:1;display:grid;gap:1.4rem;max-width:min(1240px,100%)}
+.ghero h1{font-size:clamp(3.8rem,12vw,10rem);font-weight:900;line-height:.86}
+.ghero h1 em{font-style:normal}
+.ghero h1 .mask{display:block;overflow:hidden;padding-bottom:.06em;margin-bottom:-.06em}
+.ghero h1 .line{display:block;animation:rise 1s var(--ease) both}
+.ghero h1 .mask:nth-child(2) .line{animation-delay:.1s}
+@keyframes rise{from{transform:translateY(105%)}to{transform:none}}
+.ghero .lede{max-width:38rem}
+.gstats{display:flex;flex-wrap:wrap;gap:.5rem}
+.gstats span{display:inline-flex;align-items:center;gap:.5rem;font-family:var(--label);font-size:.78rem;letter-spacing:.14em;text-transform:uppercase;color:var(--muted);border:1px solid var(--line-strong);border-radius:999px;padding:.45em .9em}
+.gstats span::before{content:"";width:6px;height:6px;border-radius:50%;background:var(--turf)}
+
+/* film strip: two rows of photos drifting in opposite directions */
+.strip{margin-top:clamp(2rem,5vw,3.5rem);display:grid;gap:.8rem;overflow:hidden;-webkit-mask-image:linear-gradient(90deg,transparent,#000 8%,#000 92%,transparent);mask-image:linear-gradient(90deg,transparent,#000 8%,#000 92%,transparent)}
+.strip-track{display:flex;gap:.8rem;width:max-content;animation:slide 55s linear infinite;will-change:transform}
+.strip-track.rev{animation-direction:reverse;animation-duration:65s}
+.strip:hover .strip-track{animation-play-state:paused}
+.strip-track img{width:clamp(170px,22vw,280px);aspect-ratio:3/2;object-fit:cover;border-radius:14px;border:1px solid var(--line);display:block;transition:transform .8s var(--ease),filter .8s var(--ease);filter:saturate(.85)}
+.strip-track img:hover{transform:scale(1.04);filter:saturate(1.05)}
+
+/* masonry bento */
+.gal{display:grid;grid-template-columns:repeat(6,minmax(0,1fr));grid-auto-rows:210px;grid-auto-flow:dense;gap:.9rem}
+.gtile{position:relative;margin:0;border-radius:var(--r-lg);overflow:hidden;background:var(--steel);border:1px solid var(--line);cursor:zoom-in;transform:translateZ(0)}
+.gtile img{width:100%;height:100%;object-fit:cover;object-position:var(--pos,center);transition:transform 1.4s var(--ease),filter 1s var(--ease);display:block}
+.gtile::after{content:"";position:absolute;inset:0;background:linear-gradient(180deg,transparent 45%,rgba(11,10,9,.85) 100%);opacity:.8;transition:opacity .6s var(--ease);pointer-events:none}
+.gtile figcaption{position:absolute;left:1rem;right:1rem;bottom:.9rem;display:grid;gap:.25rem;transform:translateY(6px);transition:transform .7s var(--ease);pointer-events:none}
+.gtile figcaption b{font-family:var(--display);font-weight:800;font-size:1.35rem;text-transform:uppercase;letter-spacing:.03em;line-height:1;text-shadow:0 2px 14px rgba(0,0,0,.8)}
+.gtile figcaption small{font-family:var(--label);font-size:.72rem;letter-spacing:.18em;text-transform:uppercase;color:var(--turf)}
+.gtile:hover img,.gtile:focus-visible img{transform:scale(1.06)}
+.gtile:hover::after{opacity:1}
+.gtile:hover figcaption{transform:none}
+.gtile .zoom{position:absolute;right:.8rem;top:.8rem;width:36px;height:36px;border-radius:50%;display:grid;place-items:center;background:rgba(11,10,9,.6);border:1px solid var(--line-strong);color:var(--bone);opacity:0;transform:scale(.7);transition:opacity .5s var(--ease),transform .6s var(--spring)}
+.gtile:hover .zoom{opacity:1;transform:none}
+.gtile .zoom svg{width:15px;height:15px}
+.w2{grid-column:span 2}.w3{grid-column:span 3}.w4{grid-column:span 4}.h2{grid-row:span 2}
+/* reveal: the shared script stages below-fold tiles; here they wipe open instead of fading up */
+.gtile.will-reveal{opacity:0;transform:none;filter:none;clip-path:inset(0 0 100% 0 round 1.5rem)}
+.gtile.revealed{opacity:1;clip-path:inset(0 0 0 0 round 1.5rem);transition:clip-path 1s var(--ease),opacity .5s var(--ease)}
+
+/* feature band with scroll parallax */
+.feature{position:relative;overflow:hidden;border-block:1px solid var(--line);background:var(--steel)}
+.feature .media{position:relative;height:clamp(380px,68vh,680px);overflow:hidden}
+.feature img{position:absolute;left:0;top:-10%;width:100%;height:120%;object-fit:cover;object-position:center 45%}
+@supports (animation-timeline: view()){
+  .feature img{animation:par linear both;animation-timeline:view();animation-range:entry 0% exit 100%}
+  @keyframes par{from{transform:translateY(-6%)}to{transform:translateY(6%)}}
+}
+.feature .media::after{content:"";position:absolute;inset:0;background:linear-gradient(0deg,rgba(11,10,9,.9) 0%,rgba(11,10,9,.35) 45%,rgba(11,10,9,.15) 100%)}
+.feature-copy{position:absolute;inset:auto 0 0 0;z-index:1;padding:clamp(1.5rem,4vw,3rem) var(--gutter)}
+.feature-copy .in{width:min(1240px,100%);margin-inline:auto;display:grid;gap:.8rem;max-width:min(1240px,100%)}
+.feature-copy h2{font-size:clamp(2.6rem,7vw,6rem);max-width:14ch}
+.feature-copy h2 em{font-style:normal;color:var(--turf)}
+.feature-copy p{color:rgba(239,231,220,.85);max-width:34rem}
+
+.gcta{display:grid;grid-template-columns:repeat(12,minmax(0,1fr));gap:1rem;align-items:center}
+.gcta .copy{grid-column:1/8;display:grid;gap:1.2rem}
+.gcta .act{grid-column:8/13;display:flex;flex-wrap:wrap;gap:.8rem;justify-content:flex-end}
+
+/* lightbox with prev/next */
+.lightbox{border:0;padding:0;background:transparent;max-width:min(96vw,1300px);max-height:96vh;overflow:visible}
+.lightbox::backdrop{background:rgba(7,6,5,.92);backdrop-filter:blur(10px)}
+.lightbox .frame{padding:.45rem}
+.lightbox img{max-height:80vh;width:auto;max-width:100%;object-fit:contain;margin:auto;display:block;animation:pop .5s var(--spring)}
+.lb-foot{display:flex;justify-content:space-between;align-items:center;gap:1rem;padding:.9rem .4rem .2rem;color:var(--muted);font-family:var(--label);letter-spacing:.14em;text-transform:uppercase;font-size:.8rem}
+.lb-foot b{color:var(--bone);font-weight:600}
+.lb-btn{border:1px solid var(--line-strong);background:rgba(239,231,220,.05);color:var(--bone);border-radius:999px;padding:.5em 1em;font:inherit;font-size:.8rem;letter-spacing:.14em;text-transform:uppercase;cursor:pointer;display:inline-flex;align-items:center;gap:.4rem}
+.lb-btn svg{width:13px;height:13px}
+.lb-nav{position:absolute;top:50%;transform:translateY(-50%);width:48px;height:48px;border-radius:50%;border:1px solid var(--line-strong);background:rgba(11,10,9,.7);color:var(--bone);display:grid;place-items:center;cursor:pointer}
+.lb-nav svg{width:18px;height:18px}
+.lb-nav.prev{left:-.6rem}.lb-nav.next{right:-.6rem}
+
+@media (max-width:960px){
+  .gal{grid-template-columns:repeat(4,minmax(0,1fr));grid-auto-rows:180px}
+  .w4,.w3{grid-column:span 4}
+  .gcta .copy,.gcta .act{grid-column:1/13}
+  .gcta .act{justify-content:flex-start}
+}
+@media (max-width:560px){
+  .ghero{padding-top:calc(env(safe-area-inset-top,0px) + 7rem)}
+  .gal{grid-template-columns:repeat(2,minmax(0,1fr));grid-auto-rows:160px}
+  .w4,.w3,.w2{grid-column:span 2}
+  .h2{grid-row:span 2}
+  .gtile figcaption b{font-size:1.1rem}
+  .lb-nav.prev{left:.4rem}.lb-nav.next{right:.4rem}
+  .lb-nav{width:40px;height:40px}
+}
+@media (prefers-reduced-motion:reduce){
+  .ghero h1 .line,.strip-track,.feature img{animation:none}
+  .gtile.will-reveal{opacity:1;clip-path:none}
+}
+</style>
+</head>
+<body>
+<div class="bg" aria-hidden="true" style="--bg:url(img/bg-floor.jpg)"><span class="rail top"></span><span class="rail bottom"></span></div>
+<div class="grain" aria-hidden="true"></div>
+<div class="progress" aria-hidden="true"></div>
+
+<header class="nav">
+  <div class="nav-pill">
+    <a class="brand" href="index.html" aria-label="Skova Fitness home"><img src="img/logo-skova.png" alt="Skova Fitness" width="557" height="169"></a>
+    <ul class="nav-links" id="nav-links">
+      <li><a href="index.html">Gym</a></li>
+      <li><a href="index.html#membership">Membership</a></li>
+      <li><a href="shop.html">Shop</a></li>
+      <li><a href="gallery.html" aria-current="true">Gallery</a></li>
+    </ul>
+    <a class="btn btn-primary btn-sm" href="index.html#visit">Book a free visit <span class="ic"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M3 13 13 3M6 3h7v7"/></svg></span></a>
+    <button class="burger" id="burger" aria-label="Open menu" aria-expanded="false" aria-controls="menu"><span></span><span></span><span></span></button>
+  </div>
+</header>
+<div class="menu" id="menu">
+  <ul>
+    <li style="--i:1"><a href="index.html">Gym</a></li>
+    <li style="--i:2"><a href="index.html#membership">Membership</a></li>
+    <li style="--i:3"><a href="shop.html">Shop</a></li>
+    <li style="--i:4"><a href="gallery.html">Gallery</a></li>
+    <li style="--i:5"><a href="index.html#visit" style="color:var(--turf)">Free visit</a></li>
+  </ul>
+</div>
+
+<main id="top">
+
+<section class="ghero" data-top-sentinel>
+  <div class="wrap">
+    <span class="eyebrow">Inside Skova</span>
+    <h1><span class="mask"><span class="line">Walk the</span></span><span class="mask"><span class="line"><em class="acc">floor.</em></span></span></h1>
+    <p class="lede">Two levels under one steel roof. The machines, the mural, the turf, the cardio deck and the walls that do the talking. Every photo here was taken at Skova.</p>
+    <div class="gstats"><span>Two levels</span><span>Turf upstairs</span><span>Hand-painted mural</span><span>Glass front</span></div>
+  </div>
+  <div class="strip" aria-hidden="true">
+    <div class="strip-track">
+      <img src="img/gallery-floor-wide.jpg" alt=""><img src="img/gallery-mural.jpg" alt=""><img src="img/gallery-machines.jpg" alt=""><img src="img/gallery-cardio-turf.jpg" alt=""><img src="img/skova-exterior-dusk.webp" alt=""><img src="img/gallery-turf-zone.jpg" alt=""><img src="img/gallery-no-pain-no-gain.jpg" alt="">
+      <img src="img/gallery-floor-wide.jpg" alt=""><img src="img/gallery-mural.jpg" alt=""><img src="img/gallery-machines.jpg" alt=""><img src="img/gallery-cardio-turf.jpg" alt=""><img src="img/skova-exterior-dusk.webp" alt=""><img src="img/gallery-turf-zone.jpg" alt=""><img src="img/gallery-no-pain-no-gain.jpg" alt="">
+    </div>
+    <div class="strip-track rev">
+      <img src="img/gallery-you-vs-you.jpg" alt=""><img src="img/skova-floor-from-mezzanine.webp" alt=""><img src="img/gallery-cardio-turf.jpg" alt=""><img src="img/gallery-mural.jpg" alt=""><img src="img/gallery-turf-zone.jpg" alt=""><img src="img/gallery-machines.jpg" alt=""><img src="img/gallery-floor-wide.jpg" alt="">
+      <img src="img/gallery-you-vs-you.jpg" alt=""><img src="img/skova-floor-from-mezzanine.webp" alt=""><img src="img/gallery-cardio-turf.jpg" alt=""><img src="img/gallery-mural.jpg" alt=""><img src="img/gallery-turf-zone.jpg" alt=""><img src="img/gallery-machines.jpg" alt=""><img src="img/gallery-floor-wide.jpg" alt="">
+    </div>
+  </div>
+</section>
+
+<section class="section" id="photos" data-watermark="The floor · The walls · The turf · The floor · The walls · The turf · ">
+  <div class="wrap">
+    <div class="section-head">
+      <span class="eyebrow">The gym</span>
+      <h2 class="h2">Nine ways to <em>see it.</em></h2>
+      <p class="lede">Tap any photo to open it full size. Arrow keys and swipes move between them.</p>
+    </div>
+    <div class="gal" id="gal">
+      <figure class="gtile w4 h2" tabindex="0" role="button" data-cap="The whole floor from the mezzanine" data-sub="Ground floor"><img src="img/gallery-floor-wide.jpg" alt="The Skova Fitness machine floor seen from the mezzanine, with the Viking mural and the HUSTLE FOR THAT MUSCLE wall at the far end" loading="lazy"><figcaption><small>Ground floor</small><b>The whole floor from above</b></figcaption><span class="zoom"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"><path d="M3 13 13 3M6 3h7v7"/></svg></span></figure>
+      <figure class="gtile w2 h2" tabindex="0" role="button" data-cap="No pain, no gain" data-sub="The walls" style="--pos:center 40%"><img src="img/gallery-no-pain-no-gain.jpg" alt="The NO PAIN NO GAIN sign painted in yellow and red with a barbell through the middle" loading="lazy"><figcaption><small>The walls</small><b>No pain, no gain</b></figcaption><span class="zoom"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"><path d="M3 13 13 3M6 3h7v7"/></svg></span></figure>
+      <figure class="gtile w3" tabindex="0" role="button" data-cap="The mural on the mezzanine wall" data-sub="The walls" style="--pos:center 55%"><img src="img/gallery-mural.jpg" alt="The hand-painted Skova Fitness mural of a bearded warrior above the mirrored wall" loading="lazy"><figcaption><small>The walls</small><b>The mural</b></figcaption><span class="zoom"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"><path d="M3 13 13 3M6 3h7v7"/></svg></span></figure>
+      <figure class="gtile w3" tabindex="0" role="button" data-cap="Plate-loaded machines under the neon rails" data-sub="Ground floor"><img src="img/gallery-machines.jpg" alt="Rows of plate-loaded machines on the ground floor under the orange neon rails of the steel roof" loading="lazy"><figcaption><small>Ground floor</small><b>The machines</b></figcaption><span class="zoom"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"><path d="M3 13 13 3M6 3h7v7"/></svg></span></figure>
+      <figure class="gtile w2 h2" tabindex="0" role="button" data-cap="Turf, sled track, ski machines and bikes" data-sub="Upper floor"><img src="img/gallery-turf-zone.jpg" alt="The turf zone from above with a painted sled track, ski machines, assault bikes, kettlebells and a plyo box" loading="lazy"><figcaption><small>Upper floor</small><b>The turf</b></figcaption><span class="zoom"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"><path d="M3 13 13 3M6 3h7v7"/></svg></span></figure>
+      <figure class="gtile w4" tabindex="0" role="button" data-cap="Treadmills on turf with the city behind" data-sub="Cardio deck" style="--pos:center 45%"><img src="img/gallery-cardio-turf.jpg" alt="A row of treadmills on the turf upstairs facing the open glass front and the houses beyond" loading="lazy"><figcaption><small>Cardio deck</small><b>Treadmills with a view</b></figcaption><span class="zoom"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"><path d="M3 13 13 3M6 3h7v7"/></svg></span></figure>
+      <figure class="gtile w2 h2" tabindex="0" role="button" data-cap="It's you vs you" data-sub="The walls"><img src="img/gallery-you-vs-you.jpg" alt="A wall sign reading IT'S YOU VS YOU with a push-up silhouette" loading="lazy"><figcaption><small>The walls</small><b>You vs you</b></figcaption><span class="zoom"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"><path d="M3 13 13 3M6 3h7v7"/></svg></span></figure>
+      <figure class="gtile w2" tabindex="0" role="button" data-cap="The building at dusk" data-sub="Outside"><img src="img/skova-exterior-dusk.webp" alt="The glass-fronted Skova Fitness building lit up at dusk with motorbikes parked in front" loading="lazy"><figcaption><small>Outside</small><b>At dusk</b></figcaption><span class="zoom"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"><path d="M3 13 13 3M6 3h7v7"/></svg></span></figure>
+      <figure class="gtile w4" tabindex="0" role="button" data-cap="The machine floor and the rig" data-sub="From the mezzanine" style="--pos:center 60%"><img src="img/skova-floor-from-mezzanine.webp" alt="Looking down from the turf mezzanine onto the machine floor and the calisthenics rig" loading="lazy"><figcaption><small>From the mezzanine</small><b>Floor and rig</b></figcaption><span class="zoom"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"><path d="M3 13 13 3M6 3h7v7"/></svg></span></figure>
+    </div>
+  </div>
+</section>
+
+<section class="feature" aria-label="The mural">
+  <div class="media"><img src="img/gallery-mural.jpg" alt="The Skova Fitness mural: a bearded warrior painted across the mezzanine wall" loading="lazy"></div>
+  <div class="feature-copy"><div class="in">
+    <span class="eyebrow">Hand-painted</span>
+    <h2>Every rep under <em>his</em> eye.</h2>
+    <p>The mural runs the full width of the mezzanine wall, above the mirrors and the dumbbell rack. You train facing it.</p>
+  </div></div>
+</section>
+
+<section class="section">
+  <div class="wrap">
+    <div class="gcta">
+      <div class="copy">
+        <span class="eyebrow">See it in person</span>
+        <h2 class="h2">Photos are <em>flat.</em> The floor is not.</h2>
+        <p class="lede">Book a free visit and walk both levels yourself. No card needed to look.</p>
+      </div>
+      <div class="act">
+        <a class="btn btn-primary" href="index.html#visit">Book a free visit <span class="ic"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M3 13 13 3M6 3h7v7"/></svg></span></a>
+        <a class="btn btn-ghost" href="index.html#zones">The four zones <span class="ic"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M3 13 13 3M6 3h7v7"/></svg></span></a>
+      </div>
+    </div>
+  </div>
+</section>
+
+</main>
+
+<dialog class="lightbox" id="lightbox" aria-label="Photo viewer">
+  <button type="button" class="lb-nav prev" id="lb-prev" aria-label="Previous photo"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M10 3 5 8l5 5"/></svg></button>
+  <div class="frame"><div class="frame-in"><img id="lb-img" src="" alt=""></div></div>
+  <div class="lb-foot"><span><b id="lb-cap"></b> <span id="lb-count"></span></span><button type="button" class="lb-btn" id="lb-close">Close <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><path d="M3 3l10 10M13 3L3 13"/></svg></button></div>
+  <button type="button" class="lb-nav next" id="lb-next" aria-label="Next photo"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="m6 3 5 5-5 5"/></svg></button>
+</dialog>
+
+<div class="dock" id="dock">
+  <a class="btn btn-ghost" data-wa="Hi Skova, I have a question." href="index.html#visit">WhatsApp <span class="ic"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M2 8a6 6 0 1 1 3 5.2L2 14l.8-3A6 6 0 0 1 2 8z"/></svg></span></a>
+  <a class="btn btn-primary" href="index.html#visit">Book a visit <span class="ic"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M3 13 13 3M6 3h7v7"/></svg></span></a>
+</div>
+<button class="totop" id="totop" aria-label="Back to top"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M8 13V3M3 8l5-5 5 5"/></svg></button>
+
+<footer class="footer">
+  <div class="wrap footer-grid">
+    <div>
+      <a class="brand" href="index.html"><img src="img/logo-skova-fitness.png" alt="Skova Fitness" width="696" height="261" loading="lazy"></a>
+      <p>Where weakness ends. © <span id="year">2026</span> Skova Fitness.</p>
+    </div>
+    <nav aria-label="Footer">
+      <a href="index.html">Gym</a><a href="index.html#membership">Membership</a><a href="shop.html">Shop</a><a href="gallery.html">Gallery</a><a href="index.html#visit">Visit</a>
+      <a href="https://www.instagram.com/skova_fitness/" target="_blank" rel="noopener">Instagram</a>
+      <a href="https://www.tiktok.com/@skova.fitness" target="_blank" rel="noopener">TikTok</a>
+      <a href="credits.html">Photo credits</a>
+    </nav>
+  </div>
+</footer>
+
+<script src="js/config.js"></script>
+<script src="js/site.js"></script>
+<script src="js/chat.js"></script>
+<script>
+(function(){
+  var tiles = Array.prototype.slice.call(document.querySelectorAll(".gtile")), cur = 0;
+  var lb = document.getElementById("lightbox"), img = document.getElementById("lb-img"), cap = document.getElementById("lb-cap"), count = document.getElementById("lb-count");
+  function show(i){
+    cur = (i + tiles.length) % tiles.length; var t = tiles[cur], src = t.querySelector("img");
+    img.src = src.getAttribute("src"); img.alt = src.alt; cap.textContent = t.getAttribute("data-cap"); count.textContent = "· " + (cur + 1) + " / " + tiles.length;
+    img.style.animation = "none"; void img.offsetWidth; img.style.animation = "";
+  }
+  function open(i){ show(i); if (lb.showModal) lb.showModal(); else lb.setAttribute("open", ""); }
+  function close(){ lb.close ? lb.close() : lb.removeAttribute("open"); tiles[cur].focus(); }
+  tiles.forEach(function(t, i){ t.addEventListener("click", function(){ open(i); }); t.addEventListener("keydown", function(e){ if (e.key === "Enter" || e.key === " ") { e.preventDefault(); open(i); } }); });
+  document.getElementById("lb-prev").addEventListener("click", function(){ show(cur - 1); });
+  document.getElementById("lb-next").addEventListener("click", function(){ show(cur + 1); });
+  document.getElementById("lb-close").addEventListener("click", close);
+  lb.addEventListener("click", function(e){ if (e.target === lb) close(); });
+  lb.addEventListener("keydown", function(e){ if (e.key === "ArrowRight") show(cur + 1); if (e.key === "ArrowLeft") show(cur - 1); });
+  var sx = null; lb.addEventListener("touchstart", function(e){ sx = e.touches[0].clientX; }, { passive: true });
+  lb.addEventListener("touchend", function(e){ if (sx === null) return; var dx = e.changedTouches[0].clientX - sx; if (Math.abs(dx) > 40) show(cur + (dx < 0 ? 1 : -1)); sx = null; });
+  window.Skova.init();
+})();
+</script>
+</body>
+</html>
